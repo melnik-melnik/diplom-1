@@ -34,35 +34,6 @@ def create_model(good_traffic, mal_traffic):
                                                         df['label'],
                                                         test_size=0.3,
                                                         random_state=143)
-    '''
-    X_test = pd.read_csv('./mal_traf.csv', nrows=27396)
-    X_test = X_test.drop('label', axis=1)
-
-  
-    #sc = MinMaxScaler()
-    sc = StandardScaler()
-    X_train = sc.fit_transform(X_train)
-    X_test = sc.transform(X_test)
-    
-
-    gnb=SVC(kernel = 'rbf', random_state = 0,probability=True)
-    print('learn midl')
-    with open('./scaler','wb') as f:
-        pickle.dump(sc,f)
-    gnb.fit(X_train, y_train)
-        y_pred_gnb = gnb.predict(X_test)
-    y_prob_pred_gnb = gnb.predict_proba(X_test)
-    # how did our model perform?
-    count_misclassified = (y_test != y_pred_gnb).sum()
-    print("GaussianNB")
-    print("=" * 30)
-    print('Misclassified samples: {}'.format(count_misclassified))
-    accuracy = accuracy_score(y_test, y_pred_gnb)
-    print('Accuracy: {:.2f}'.format(accuracy))
-    print(classification_report(y_test, y_pred_gnb))
-    with open('./gnb.clf', 'wb') as fid:
-        pickle.dump(gnb, fid)    
-    '''
 
     pipeline = Pipeline(
         [('pca', PCA(n_components = 2)), ('scaler', StandardScaler()), ('classifier', SVC(kernel='linear', random_state=50, probability=True))])
@@ -72,7 +43,7 @@ def create_model(good_traffic, mal_traffic):
     y_prob_pred_gnb = pipeline.predict_proba(X_test)
     # how did our model perform?
     count_misclassified = (y_test != y_pred_gnb).sum()
-    print("GaussianNB")
+    print("SVC")
     print("=" * 30)
     print('Misclassified samples: {}'.format(count_misclassified))
     accuracy = accuracy_score(y_test, y_pred_gnb)
