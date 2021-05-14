@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+{% block active_btn1 %}
+active
+{% endblock active_btn1 %}
+
+{% block script %}
+
+<script>
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+ var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Name');
+    data.addColumn('number', 'Entropy');
+    {% for m in out -%}
+    data.addRows([
+    ['{{m.key}}', {{m.pkt_count}}]
+    ]);
+    {% endfor -%}
+var chart = new google.visualization.ColumnChart(document.getElementById('diagram_ent_old'));
+chart.draw(data, null);
+}
+
+</script>
+
+
+
+{% endblock script %}
+
+{% block content %}
+
+<div class="top_blocks">
+    <div class="top_block1">
+        <p>За сегодня было просканированно 66 пакетов</p>
+    </div>
+    <div class="top_block2">
+        <p>Еще какое нибудь важное уведомление, допустим слишком частые обращения к домену google.com</p>
+    </div>
+    <div class="top_block3">
+        <p>Еще какое нибудь важное уведомление, допустим за последний час обьем трафика увеличился на 500%</p>
+    </div>
+</div>
+
+<h2>Инофрмация за текущую сессию</h2>
+<div class="double_blocks">
+    <div class="block_diagram_pkt_count">
+        <!--
+        <div id="diagram_ent"></div>   width="1200" height="400"
+        <input type="button" value="Add Data" onclick="adddata()">
+        -->
+        <canvas id="diagram_pkt_count" width="1200" height="500"></canvas>
+    </div>
+    <div class="top_list">
+        <p>Подозрительные домены:</p>
+        <ul class="top_el">
+            {% for m in dns -%}
+            <li><p>{{m.Name}}</p></li>
+            {% endfor -%}
+        </ul>
+    </div>
+</div>
+
+ <div class="block_diagram_pkt_count">
+        <canvas id="diagram_count_subdmn" width="1200" height="500"></canvas>
+</div>
+
+<form method="POST">
+    <p>Выберите дату от: <input type="datetime-local" name="start_date" required placeholder="">
+        до: <input type="datetime-local" name="end_date" required placeholder="">
+        <input type="submit" value="Применить"/></p>
+</form>
+
+<h2>{{msg}}</h2>
+<div class="block_diagram_pkt_count">
+    <canvas id="diagram_timeline_pkt_count" width="1200" height="500"></canvas>
+</div>
+
+
+<div class="block_diagram_pkt_count">
+    <canvas id="diagram_timeline_count_subdmn" width="1200" height="500"></canvas>
+</div>
+
+
+<script>
+    Chart.defaults.global.responsive = false;
+    var ctx = document.getElementById('diagram_pkt_count').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+             labels : [{% for item in pkt_data %}
+                        '{{item.ip}}',
+                        {% endfor %}],
+            datasets: [
+            {
+                label: 'Общее кол-во пакетов от клиента: ',
+                 data : [{% for item in pkt_data %}
+                        {{item.pkt_count}},
+                        {% endfor %}],
+
+                backgroundColor: "#2f66cd",
+                borderColor: "#2f66cd",
+                borderWidth: 1
+            },
+            {
+                label: 'Подозрительное кол-во пакетов от клиента: ',
+                 data : [{% for item in pkt_data %}
+                        {{item.susp_pkt}},
+                        {% endfor %}],
+                backgroundColor: "red",
+                borderColor: "red",
+                borderWidth: 1
+            }
+            ],
+        },
+        options: {
+            scales: {
+                yAxes: [
+                    { ticks: { beginAtZero: true } }
+                ]
+            }
+        }
+    });
+</script>
+
+
+<script>
+    Chart.defaults.global.responsive = false;
+    var ctx = document.getElementById('diagram_count_subdmn').getContext('2d');
+    var check_color1 = "red";
+    var check_color1 = "black";
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+             labels : [{% for item in subdmn_data %}
+                        '{{item.dns_names}}',
+                        {% endfor %}],
+            datasets: [
+            {
+                label: 'Кол-во поддоменов: ',
+                 data : [{% for item in subdmn_data %}
+                        {{item.subdomains}},
+                        {% endfor %}],
+                backgroundColor: "#2f66cd",
+                borderColor: "#2f66cd",
+                borderWidth: 1
+            }],
+        },
+        options: {
+            scales: {
+                yAxes: [
+                    { ticks: { beginAtZero: true } }
+                ]
+            }
+        }
+    });
+</script>
+
+<script>
+    Chart.defaults.global.responsive = false;
+    var ctx = document.getElementById('diagram_timeline_pkt_count').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+             labels : [{% for item in timeline_pkt_data %}
+                        '{{item.ip}}',
+                        {% endfor %}],
+            datasets: [
+            {
+                label: 'Общее кол-во пакетов от клиента: ',
+                 data : [{% for item in timeline_pkt_data %}
+                        {{item.pkt_count}},
+                        {% endfor %}],
+
+                backgroundColor: "#2f66cd",
+                borderColor: "#2f66cd",
+                borderWidth: 1
+            },
+            {
+                label: 'Подозрительное кол-во пакетов от клиента: ',
+                 data : [{% for item in timeline_pkt_data %}
+                        {{item.susp_pkt}},
+                        {% endfor %}],
+                backgroundColor: "red",
+                borderColor: "red",
+                borderWidth: 1
+            }
+            ],
+        },
+        options: {
+            scales: {
+                yAxes: [
+                    { ticks: { beginAtZero: true } }
+                ]
+            }
+        }
+    });
+</script>
+
+
+<script>
+    Chart.defaults.global.responsive = false;
+    var ctx = document.getElementById('diagram_timeline_count_subdmn').getContext('2d');
+    var check_color1 = "red";
+    var check_color1 = "black";
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+             labels : [{% for item in timeline_subdmn_data %}
+                        '{{item.dns_names}}',
+                        {% endfor %}],
+            datasets: [
+            {
+                label: 'Кол-во поддоменов: ',
+                 data : [{% for item in timeline_subdmn_data %}
+                        {{item.subdomains}},
+                        {% endfor %}],
+                backgroundColor: "#2f66cd",
+                borderColor: "#2f66cd",
+                borderWidth: 1
+            }],
+        },
+        options: {
+            scales: {
+                yAxes: [
+                    { ticks: { beginAtZero: true } }
+                ]
+            }
+        }
+    });
+</script>
+
+<script>
+    function adddata(){
+        myChart.data.datasets[0].data[2] = 5;
+        myChart.data.labels[2] = "192_168_1_55";
+        myChart.update();
+    }
+</script>
+
+
+{% endblock content %}

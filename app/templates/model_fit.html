@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block active_btn4 %}
+active
+{% endblock active_btn4 %}
+
+{% block content %}
+
+<h2>Запустить систему (сниффер, модель анализа трафика, бота оповещения): </h2>
+<div class ="block_start_stop">
+    <form action="/sniff_start" method="post">
+        <button name="sniff_start_btn" type="submit">Запустить сниффер</button>
+    </form>
+    <form action="/sniff_stop" method="post">
+        <button name="sniff_stop_btn" type="submit">Остановить сниффер</button>
+    </form>
+</div>
+
+<div class="block_settings">
+    <h2>Меню настроек:</h2>
+    <form method="post" action="/model_fit_settings">
+        <select name="select_log">
+            <option value="">уровень логирование</option>
+            <option value="OFF">Off</option>
+            <option value="FATAL">Fatal</option>
+            <option value="SEVERE">Severe</option>
+            <option value="WARNING">Warning</option>
+            <option value="AUDIT">Audit</option>
+            <option value="INFO">Info</option>
+            <option value="CONFIG">Config</option>
+            <option value="DETAIL">Detail</option>
+            <option value="FINE">Fine</option>
+            <option value="FINER">Finer</option>
+            <option value="FINEST">Finest</option>
+            <option value="ALL">All</option>
+        </select>
+        <select name="select_adapter">
+            <option value="">Выбрать интерфейс сканирования</option>
+            {% for select_adapter_el in select_adapter %}
+            <option value="{{select_adapter_el}}">{{select_adapter_el}}</option>
+            {% endfor %}
+        </select>
+        <p><input type="submit" value="Применить"/></p>
+    </form>
+</div>
+
+
+<div class="block_upload">
+    <h2>Выбрать файл (pcap) для переобучения модели: </h2>
+    <form method=post enctype=multipart/form-data action="/model_fit_upload">
+        <input type=file name=file>
+        <input type=submit value=Применить>
+    </form>
+</div>
+
+<form action="/insert_chat_id" method="POST">
+    <p>Вваедите chat_id <input type="text" name="chat_id"/> <input type="submit" value="Применить"/></p>
+</form>
+
+
+{% endblock content %}

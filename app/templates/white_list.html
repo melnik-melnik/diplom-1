@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block active_btn3 %}
+active
+{% endblock active_btn3 %}
+
+{% block content %}
+
+<form action="/white_list/insert" method="POST">
+    <p>Добавить <input type="text" name="name"/> <input type="submit" value="Применить"/></p>
+</form>
+
+<form action="/white_list" method="POST">
+    <p>Поиск <input type="text" name="search_name"/> <input type="submit" value="Применить"/></p>
+</form>
+
+
+<table class="wh_tab">
+    <tr>
+        <th>Имя домена</th>
+        <th>Удалить</th>
+    </tr>
+    {% for white_list_el in white_list %}
+    <tr>
+        <td>{{white_list_el.name}}</td>
+        <td>
+            <form action="/white_list/del/{{white_list_el.id}}">
+                <input type="hidden" name="index" value="1">
+                <input type="submit" value="Удалить">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}

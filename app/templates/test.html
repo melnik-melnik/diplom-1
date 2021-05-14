@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask-GoogleCharts Example</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="static/css/def.css">
+
+        <script src="https://www.google.com/jsapi"></script>
+    <script>
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+ var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Year');
+    data.addColumn('number', 'Score');
+    {% for m in out -%}
+    data.addRows([
+    ['{{m.Name}}', {{m.Entropy}}]
+    ]);
+    {% endfor -%}
+var chart = new google.visualization.ColumnChart(document.getElementById('diagram'));
+chart.draw(data, null);
+}
+    </script>
+
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar w/ text</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Civil Complaint</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Texas Profile</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<p align="center"><a href=traffic>
+    <button class=grey style="height:75px;width:150px">Go to traffic</button>
+</a></p>
+
+
+
+
+
+<div class="block1">
+    <h1>Гистограмма</h1>
+    <div id="diagram"></div>
+</div>
+
+
+<div class="block2">
+    <h2>dns</h2>
+    {% for m in dns -%}
+    ['{{m.Name}}', {{m.Entropy}}]
+    {% endfor -%}
+</div>
+
+
+<div class="block3">
+
+    <h2>out</h2>
+    {% for m in out -%}
+    ['{{m.Name}}',{{m.Entropy}}]
+    {% endfor -%}
+</div>
+
+</body>
+</html>

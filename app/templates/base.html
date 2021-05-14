@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detect DNS-tunneling</title>
+    <link rel="stylesheet" href="static/css/def.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    {% block script -%} {% endblock -%}
+
+</head>
+
+<body>
+
+<div class="navigate">
+    <ul class="ul_nav">
+        <li class="{% block active_btn1 -%} {% endblock -%}">
+            <a href="home"><img src="static/img/home2.svg">
+                <p>Главная страница</p></a>
+        </li>
+        <li class="{% block active_btn2 -%} {% endblock -%}">
+            <a href="traffic"><img src="static/img/traffic2.svg">
+                <p>Просмотреть трафик</p></a>
+        </li>
+        <li class="{% block active_btn3 -%} {% endblock -%}">
+            <a href="white_list"><img src="static/img/white_list1.svg">
+                <p>Белый лист доменов</p></a>
+        </li>
+        <li class="{% block active_btn4 -%} {% endblock -%}">
+            <a href="model_fit"><img src="static/img/model2.svg">
+                <p>Переобучить модель</p></a>
+        </li>
+
+        <li>
+            <form action="/delete_session" method="POST">
+                <input type="submit" value="Выйти"/></p>
+            </form>
+        </li>
+
+    </ul>
+
+
+</div>
+
+
+<div class="content">
+
+    {% block content -%} {% endblock -%}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block active_btn2 %}
+active
+{% endblock active_btn2 %}
+
+{% block content %}
+
+<form method="POST">
+    <p>Выберите дату: <input type="date" name="date_traffic" id="date_now" required placeholder=""> <input type="submit" value="Применить"/> </p>
+</form>
+
+
+<script>  // Скрипт для сегодняшней даты
+var date = new Date();
+var day = date.getDate();
+var month = date.getMonth() + 1;
+var year = date.getFullYear();
+if (month < 10) month = "0" + month;
+if (day < 10) day = "0" + day;
+var today = year + "-" + month + "-" + day;
+document.getElementById('date_now').value = today;
+</script>
+
+<script> // Скрипт для цвета
+
+function get_color(label) {
+    alert('qwe')
+    if( label == 1){
+    return "red"
+    }
+    return "blue"
+}
+</script>
+
+<div class="div_traffic_tab">
+    <table class="traffic_tab">
+        <tr>
+            <th>Адрес Источника</th>
+            <th>Адрес назначения</th>
+            <th>Размер пакеты</th>
+            <th>Запрос/Ответ</th>
+            <th>Количество запросов</th>
+            <th>Доменное имя</th>
+            <th>Типа запроса</th>
+            <th>Тип ответа</th>
+            <th>TTL</th>
+            <th>Размер ответа</th>
+            <th>Кол-во авторитетных записей</th>
+            <th>Кол-во дополнительных записей</th>
+            <th>Кол-во ответов</th>
+        </tr>
+        {% for traffic_list_el in traffic_list %}
+            {% if traffic_list_el.label == 1 %}
+            <tr bgcolor='#ff8080'>
+                {% else %}
+            <tr bgcolor='#99ffbb'>
+            {% endif %}
+            <td>{{traffic_list_el.src}}</td>
+            <td>{{traffic_list_el.dst}}</td>
+            <td>{{traffic_list_el.len}}</td>
+            <td>{{traffic_list_el.qr}}</td>
+            <td>{{traffic_list_el.count_queries}}</td>
+            <td>{{traffic_list_el.qry_name}}</td>
+            <td>{{traffic_list_el.qry_type}}</td>
+            <td>{{traffic_list_el.resp_type}}</td>
+            <td>{{traffic_list_el.resp_ttl}}</td>
+            <td>{{traffic_list_el.resp_len}}</td>
+            <td>{{traffic_list_el.count_auth_rr}}</td>
+            <td>{{traffic_list_el.count_add_rr}}</td>
+            <td>{{traffic_list_el.count_answers}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+{% endblock content %}
+

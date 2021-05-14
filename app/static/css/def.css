@@ -1,0 +1,184 @@
+/***************************************************************/
+/*                     base.html                               */
+/***************************************************************/
+
+html, body {
+    /* body на всю страницу */
+    margin: 0;
+    padding: 0;
+    text-align: center; /* Кнопки по центру */
+    align-items: center;
+    background-color: #f2f2f2; /* Или этот  e6e6e6 */
+}
+
+.navigate {
+    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Параметры тени */
+	font-size: 20pt;
+}
+
+.content{
+    margin-right: 10%; /* Отступ справа */
+    margin-left: 10%; /* Отступ слева */
+}
+
+.ul_nav {
+    margin: 0;
+    margin: 0; /* Навигация с верха страницы */
+    padding-left: 10%; /* Отступ для кнопок справа */
+    padding-right: 10%; /* Отступ для кнопок слева */
+    text-align: center; /* Кнопки по центру */
+    background-color: #2f66cd;
+}
+
+.ul_nav li {
+    display: inline-flex; /* Разместить кнопки в ряд */
+    vertical-align: middle; /* Выравнивание кнопок по высоте */
+    padding: 10px 10px; /* Отступы для внутреннего текста */
+}
+
+.ul_nav li a {
+    display: flex; /* Выравнивание элементов в ряд */
+    align-items: center;
+    text-decoration: none; /* Убрать стандартный стиль */
+}
+
+.ul_nav li a p {
+    padding: 0px 20px; /* Отступы текста от других эллементов */
+    text-decoration: none; /* Убрать стандартный стиль */
+    color: white;
+}
+
+.ul_nav .active {
+    background-color: #4CAF50; /* Изменить цвет активного меню */
+}
+
+.ul_nav li:hover {
+    background-color: #a6a6a6; /* Изменить цвет при наведении */
+}
+
+.top_block1, .top_block2, .top_block3, .top_list, .block_diagram_pkt_count, .block_diagram_subdmn_count, .block_diagram_count_subdmn, .wh_tab, .traffic_tab, .login {
+    background-color: #ffffff;
+}
+
+/**************************************************************/
+/*                    login.html                              */
+/**************************************************************/
+
+.login{
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle; /* Выравнивание кнопок по высоте */
+    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Параметры тени */
+    font-size: 20pt;
+    width: 30%;
+    height: 500px; /* Или этот  e6e6e6 */
+}
+
+.login_butn{
+    padding-top: 20%;
+}
+
+.login_butn p {
+  font-size:20px;
+
+}
+
+
+
+/**************************************************************/
+/*                     Home.html                              */
+/**************************************************************/
+
+.top_block1, .top_block2, .top_block3 {  /* 3 верхних блока */
+    width: 29%;
+    height: 70px;
+    display: inline-flex; /* Разместить блоки в ряд */
+    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Параметры тени */
+    padding: 1%;
+    margin: 1%;
+}
+
+.top_block1, .top_block2, .top_block3 p { /* Для их текста */
+    font-size: 14pt;
+    text-align:center;
+}
+
+.double_blocks { /* Блок для диаграммы + список доменов */
+    display: inline-flex; /* Разместить блоки в ряд */
+    align-items: center;
+    text-align: center; /* Кнопки по центру */
+    width: 100%;
+}
+
+.top_list {  /* Список доменов */
+    margin-left:25px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Параметры тени */
+    width: 200px;
+    height: 530px;
+    font-size: 14pt;
+}
+
+.top_el{ /* Убрали стандартные отступы */
+    margin: 0;
+    padding: 0;
+}
+
+.top_el li { /* Убираем маркеры из списка */
+    list-style-type: none;
+}
+
+.block_diagram_pkt_count { /* Главная диаграмма */
+    text-align: center; /* Кнопки по центру */
+    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Параметры тени */
+    width: 80%;
+    height: 500px;
+    padding: 1%;
+    margin: 1%;
+}
+
+
+/*************************************************************/
+/*                  traffic.html                             */
+/*************************************************************/
+
+.traffic_tab, .wh_tab {
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Параметры тени */
+    font-size: 14pt;
+}
+
+.traffic_tab{
+    width: 100%;
+}
+
+/*************************************************************/
+/*                  wh_list.html                             */
+/*************************************************************/
+
+.wh_tab{
+    width: 50%;
+}
+
+form p {
+    font-size: 14pt;
+}
+
+/*************************************************************/
+/*                  model_fit.html                           */
+/*************************************************************/
+
+.block_start_stop, .block_settings, .block_upload {
+    margin: 3%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.block_start_stop {
+    display: inline-flex; /* Разместить блоки в ряд */
+}
+
+
+
